@@ -134,13 +134,7 @@ def paint_sheet(sh, ws, header, promo, data_rows, widths, star_col=2, date_col=8
                "textFormat": {"bold": True}}), "fmt-promo")
     _retry(lambda: ws.freeze(rows=2), "freeze"); time.sleep(2)
     try:
-        bu(sh, {"requests": [{"addBanding": {"bandedRange": {
-            "range": {"sheetId": ws.id, "startRowIndex": 2,
-                      "endRowIndex": min(total, ws.row_count),
-                      "startColumnIndex": 0,
-                      "endColumnIndex": min(len(header), ws.col_count)},
-            "rowProperties": {"firstBandColor": {"red": 1, "green": 1, "blue": 1},
-                              "secondBandColor": {"red": 0.95, "green": 0.96, "blue": 0.98}}}}}]})
+    print("zebra: already on, skip")
     except Exception as e:
         print("banding skip:", str(e)[:80], flush=True)
     bu(sh, {"requests": [{"setBasicFilter": {"filter": {"range": {
