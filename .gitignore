@@ -1,0 +1,21 @@
+# local secrets & runtime files — never commit
+token.json
+oauth_client.json
+creds.json
+seeds_sample.json
+catalog_sample.json
+catalog_sample.csv
+catalog.csv
+batch*.txt
+trans*.txt
+tabs*.txt
+check_now.txt
+meta.txt
+top3.txt
+final.txt
+verify.txt
+tabs_now.txt
+__pycache__/
+.pytest_cache/
+patch_*.py
+test_readme.py

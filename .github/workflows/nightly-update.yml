@@ -1,0 +1,37 @@
+name: nightly-update
+on:
+  schedule:
+    - cron: "0 3 * * *"   # daily 03:00 UTC
+  workflow_dispatch:      # manual run button
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Restore Google token
+        run: python cloud_auth.py
+
+      - name: Refresh repo stats (stars/pushed) + rebuild + push to Google Sheets
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          OPENROUTER_KEY: ${{ secrets.OPENROUTER_KEY }}
+          GSHEET_TOKEN_JSON: ${{ secrets.GSHEET_TOKEN_JSON }}
+        run: |
+          python github_catalog_sync.py seeds --config config.json --out seeds.json
+          python enrich_delta.py
+          python fetch_readme.py
+          python translate_long.py --workers 4
+          python swap_desc.py
+          python sort_stars.py
+          python improve_sheet.py --sheet 1XHUL2FDNQC_ZBosZdbAhYEamjf-MT4TkFV_7cXelGrI
+          python fix_colors_order.py || true
+          python fix_wrap.py || true

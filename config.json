@@ -1,0 +1,186 @@
+{
+ "max_repos": 1100,
+ "max_per_hub": 110,
+ "min_stars": 50,
+ "pushed_since": "2024-01-01",
+ "hub_ru": {
+  "content": "Контент",
+  "video": "Видео, звук, рилсы, монтаж",
+  "parsing": "Парсинг, скрапинг, сбор данных",
+  "mailing": "Рассылки",
+  "sites": "Создание сайтов",
+  "seo": "SEO",
+  "smm": "SMM и соцсети",
+  "bots": "Боты в мессенджерах",
+  "crm": "CRM, таблицы и учет",
+  "saas": "Основа для своего сервиса",
+  "ai": "Нейросетевые помощники",
+  "other": "Разобрать",
+  "images": "Генерация картинок",
+  "data": "Базы и бэкенд"
+ },
+ "hubs": [
+  {
+   "id": "content",
+   "topics": [
+    "prompts",
+    "prompt-engineering",
+    "markdown",
+    "writing",
+    "blog",
+    "newsletter"
+   ]
+  },
+  {
+   "id": "video",
+   "topics": [
+    "video-editing",
+    "ffmpeg",
+    "text-to-speech",
+    "speech-to-text",
+    "subtitles",
+    "video-automation"
+   ]
+  },
+  {
+   "id": "parsing",
+   "topics": [
+    "scraping",
+    "crawler",
+    "parser"
+   ]
+  },
+  {
+   "id": "mailing",
+   "topics": [
+    "rss",
+    "scheduler",
+    "newsletter",
+    "broadcast",
+    "mailchimp"
+   ]
+  },
+  {
+   "id": "sites",
+   "topics": [
+    "landing-page",
+    "static-site",
+    "cms",
+    "portfolio",
+    "blog"
+   ]
+  },
+  {
+   "id": "seo",
+   "topics": [
+    "seo"
+   ]
+  },
+  {
+   "id": "smm",
+   "topics": [
+    "social-media",
+    "tiktok",
+    "youtube",
+    "instagram",
+    "twitter"
+   ]
+  },
+  {
+   "id": "bots",
+   "topics": [
+    "telegram-bot",
+    "discord-bot",
+    "chatbot",
+    "telegram"
+   ]
+  },
+  {
+   "id": "crm",
+   "topics": [
+    "spreadsheet",
+    "crm",
+    "dashboard",
+    "airtable",
+    "erp"
+   ]
+  },
+  {
+   "id": "saas",
+   "topics": [
+    "boilerplate",
+    "saas",
+    "stripe",
+    "authentication",
+    "payments"
+   ]
+  },
+  {
+   "id": "ai",
+   "topics": [
+    "ai-agent",
+    "agents",
+    "mcp",
+    "assistant",
+    "skills",
+    "low-code",
+    "llm",
+    "rag",
+    "ai-chatbot"
+   ]
+  },
+  {
+   "id": "images",
+   "topics": [
+    "image-generation",
+    "stable-diffusion",
+    "text-to-image",
+    "comfyui"
+   ]
+  },
+  {
+   "id": "data",
+   "topics": [
+    "database",
+    "postgres",
+    "firebase",
+    "backend",
+    "search-engine"
+   ]
+  }
+ ],
+ "must_have": [
+  "openclaw/openclaw",
+  "obra/superpowers",
+  "NousResearch/hermes-agent",
+  "n8n-io/n8n",
+  "Significant-Gravitas/AutoGPT",
+  "langchain-ai/langchain",
+  "langgenius/dify",
+  "AUTOMATIC1111/stable-diffusion-webui",
+  "Comfy-Org/ComfyUI",
+  "open-webui/open-webui",
+  "lobehub/lobehub",
+  "danny-avila/LibreChat",
+  "crewAIInc/crewAI",
+  "microsoft/autogen",
+  "langchain-ai/langgraph",
+  "infiniflow/ragflow",
+  "mem0ai/mem0",
+  "firecrawl/firecrawl",
+  "danielmiessler/Fabric",
+  "punkpeye/awesome-mcp-servers",
+  "thedotmack/claude-mem",
+  "Zulko/moviepy",
+  "krillinai/OpenCreator",
+  "Anil-matcha/AI-Youtube-Shorts-Generator",
+  "coollabsio/coolify",
+  "supabase/supabase",
+  "docling-project/docling",
+  "meilisearch/meilisearch"
+ ],
+ "awesome": [
+  "https://github.com/awesome-selfhosted/awesome-selfhosted",
+  "https://github.com/sindresorhus/awesome"
+ ]
+}
