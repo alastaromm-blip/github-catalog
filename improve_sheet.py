@@ -197,7 +197,7 @@ def main():
         paint_sheet(sh, master, RU_HEADER, promo_text(), rows, widths)
     try:
         master.update(values=[["hub"]], range_name="K1:K1")
-        master.update(values=[[r[10]] for r in rows], range_name=f"K3:K{len(rows)+2}")
+        _retry(lambda: master.update(values=[[r[10]] for r in rows], range_name=f"K3:K{len(rows)+2}"), "hub-col")
         master.format("K1:K1", {"textFormat": {"bold": True}})
     except Exception as e:
         print("hub helper skip:", e)
@@ -240,7 +240,7 @@ def main():
     for h in order:
         toc.append([h, len(hubs[h]), today])
     toc.append(["Топ недели (свежие + звезды)", len(fresh), today])
-    start.update(values=toc, range_name=f"A2:C{len(toc)+1}")
+    _retry(lambda: start.update(values=toc, range_name=f"A2:C{len(toc)+1}"), "toc")
     start.format("A2:C2", {"textFormat": {"bold": True, "foregroundColor": {"red": 1, "green": 1, "blue": 1}},
                            "backgroundColor": {"red": 0.16, "green": 0.32, "blue": 0.65}})
     start.freeze(rows=2)
