@@ -43,8 +43,30 @@ def TAB(name):
 RU_HEADER = ["№", "Название", "Звезды", "Где пригодится", "Быстрый старт",
              "Ссылка", "Язык", "Лицензия", "Обновлен", "Активен"]
 NCOLS = len(RU_HEADER)
-PROMO_TEXT = ("Новинки и разборы каждую неделю — подпишись: Telegram https://t.me/ВАШ_КАНАЛ "
-              "| Макс https://max.ru/ВАШ_КАНАЛ (замени ссылки на свои)")
+PROMO_TEXT = ('Рекламное агентство "Гибкий Маркетинг" https://aaik-marketing.ru'
+              " | 1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
+              "★ Привели > 3 млн лидов/заявок в воронки онлайн-школ и различных бизнесов "
+              "| Посмотри наш ТГ канал - https://t.me/alastartarget")
+
+
+def promo_runs():
+    segs = [('Рекламное агентство "Гибкий Маркетинг" ', None),
+            ("https://aaik-marketing.ru", "https://aaik-marketing.ru"),
+            (" | 1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
+             "★ Привели > 3 млн лидов/заявок в воронки онлайн-школ и различных бизнесов "
+             "| Посмотри наш ТГ канал - ", None),
+            ("https://t.me/alastartarget", "https://t.me/alastartarget")]
+    out, i = [], 0
+    for text, link in segs:
+        fmt = {"bold": True, "fontSize": 13,
+               "foregroundColor": {"red": 0.1, "green": 0.1, "blue": 0.1}}
+        if link:
+            fmt["foregroundColor"] = {"red": 0.05, "green": 0.3, "blue": 0.8}
+            fmt["underline"] = True
+            fmt["link"] = {"uri": link}
+        out.append({"startIndex": i, "format": fmt})
+        i += len(text)
+    return out
 
 
 def promo_text():
@@ -134,6 +156,14 @@ def paint_sheet(sh, ws, header, promo, data_rows, widths, star_col=2, date_col=8
     _retry(lambda: ws.format(f"A2:{chr(64+len(header))}2",
               {"backgroundColor": {"red": 1, "green": 0.95, "blue": 0.8},
                "textFormat": {"bold": True}}), "fmt-promo")
+    try:
+        bu(sh, {"requests": [{
+            "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 1, "endRowIndex": 2,
+                                     "startColumnIndex": 0, "endColumnIndex": 1},
+                           "cell": {"textFormatRuns": promo_runs()},
+                           "fields": "textFormatRuns"}}]})
+    except Exception as _e:
+        print("promo runs skip:", str(_e)[:60], flush=True)
     _retry(lambda: ws.freeze(rows=2), "freeze"); time.sleep(2)
     print("zebra: already on, skip")
     bu(sh, {"requests": [{"setBasicFilter": {"filter": {"range": {
