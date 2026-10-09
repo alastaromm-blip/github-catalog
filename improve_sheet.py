@@ -44,7 +44,7 @@ RU_HEADER = ["№", "Название", "Звезды", "Где пригодит
              "Ссылка", "Язык", "Лицензия", "Обновлен", "Активен"]
 NCOLS = len(RU_HEADER)
 PROMO_TEXT = ('Рекламное агентство "Гибкий Маркетинг" https://aaik-marketing.ru'
-              "\n1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
+              " | 1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
               "★ Привели > 3 млн лидов/заявок в воронки онлайн-школ и различных бизнесов "
               "| Посмотри наш ТГ канал - https://t.me/alastartarget")
 
@@ -52,7 +52,7 @@ PROMO_TEXT = ('Рекламное агентство "Гибкий Маркет�
 def promo_runs():
     segs = [('Рекламное агентство "Гибкий Маркетинг" ', None),
             ("https://aaik-marketing.ru", "https://aaik-marketing.ru"),
-            ("\n1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
+            (" | 1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
              "★ Привели > 3 млн лидов/заявок в воронки онлайн-школ и различных бизнесов "
              "| Посмотри наш ТГ канал - ", None),
             ("https://t.me/alastartarget", "https://t.me/alastartarget")]
@@ -155,13 +155,15 @@ def paint_sheet(sh, ws, header, promo, data_rows, widths, star_col=2, date_col=8
                "horizontalAlignment": "CENTER", "verticalAlignment": "MIDDLE"}), "fmt-head")
     _retry(lambda: ws.format(f"A2:{chr(64+len(header))}2",
               {"backgroundColor": {"red": 1, "green": 0.95, "blue": 0.8},
-               "textFormat": {"bold": True}}), "fmt-promo")
+               "textFormat": {"bold": True},
+               "horizontalAlignment": "LEFT",
+               "verticalAlignment": "MIDDLE"}), "fmt-promo")
     try:
         bu(sh, {"requests": [{
             "updateDimensionProperties": {
                 "range": {"sheetId": ws.id, "dimension": "ROWS",
                           "startIndex": 1, "endIndex": 2},
-                "properties": {"pixelSize": 56}, "fields": "pixelSize"}}]})
+                "properties": {"pixelSize": 32}, "fields": "pixelSize"}}]})
         bu(sh, {"requests": [{
             "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 1, "endRowIndex": 2,
                                      "startColumnIndex": 0, "endColumnIndex": 1},
