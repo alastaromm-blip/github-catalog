@@ -36,7 +36,8 @@ def _hub_color(title):
 
 
 def TAB(name):
-    return HUB_STYLE.get(name, ("", ""))[1] + " " + name if HUB_STYLE.get(name, ("", ""))[1] else name
+    # plain canonical titles; colors come from tabColor/header, not emoji
+    return name
 
 
 RU_HEADER = ["№", "Название", "Звезды", "Где пригодится", "Быстрый старт",
