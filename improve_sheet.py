@@ -14,7 +14,7 @@ HUB_STYLE = {
     "Создание сайтов": ("3F8C7A", "🌐"), "SEO": ("8C6D3F", "🔍"),
     "SMM и соцсети": ("8E5B96", "📣"), "Боты в мессенджерах": ("3F7A8C", "🤖"),
     "CRM, таблицы и учет": ("6B7A5B", "🗂"), "Основа для своего сервиса": ("556B8C", "🚀"),
-    "Нейросетевые помощники": ("6C4E9C", "🧠"), "Генерация картинок": ("9C5B7A", "🎨"),
+    "Нейросетевые помощники": ("6C4E9C", "🧠"), "Маркетинг": ("B08968", "📊"), "Генерация картинок": ("9C5B7A", "🎨"),
     "Базы и бэкенд": ("4E8C6B", "🗄"), "Разобрать": ("777777", "🧺"),
     "Каталог": ("294CA6", "📚"), "Старт": ("294CA6", "🏠"), "Топ недели": ("8C743F", "🏆"),
 }
@@ -220,7 +220,7 @@ def main():
         hubs.setdefault(r[10], []).append(r)
     order = [h for h in [hub_ru.get(k, k) for k in
                          ["content", "video", "parsing", "mailing", "sites", "seo",
-                          "smm", "bots", "crm", "saas", "ai", "images", "data", "other"]] if h in hubs]
+                          "smm", "bots", "crm", "saas", "ai", "images", "data", "marketing", "other"]] if h in hubs]
     import time as _t
     for h in order:
         print(f"tab {h}...", flush=True)
