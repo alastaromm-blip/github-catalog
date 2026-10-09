@@ -80,6 +80,8 @@ def hub_for_topics(topics: list[str]) -> str:
         return "sites"
     if t & {"self-hosted", "cloud-storage", "file-sharing", "dashboard"}:
         return "crm"
+    if "marketing" in t:
+        return "marketing"
     if t & {"video-editing", "video-automation", "ffmpeg", "text-to-speech", "speech-to-text", "subtitles"}:
         return "video"
     if "analytics" in t:
