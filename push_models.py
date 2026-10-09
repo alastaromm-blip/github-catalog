@@ -156,13 +156,45 @@ def main():
         return ws
 
     def paint(ws, header, data, color):
+        from improve_sheet import bu as _bu
         ws.clear()
         time.sleep(1)
         ws.append_row(header)
+        ws.append_row([""])  # promo row, look applied below
         for i in range(0, len(data), 100):
             ws.append_rows([[("" if v is None else v) for v in r] for r in data[i:i + 100]])
             time.sleep(1)
         n = len(data) + 2
+        # promo look (same as Топ недели): single line, left, links, height 32
+        _segs = [('Рекламное агентство "Гибкий Маркетинг" ', None),
+                 ("https://aaik-marketing.ru", "https://aaik-marketing.ru"),
+                 (" | 1.3+ млрд рублей заработали клиентам ★ Реализовали > 500 млн рекламного бюджета "
+                  "★ Привели > 3 млн лидов/заявок в воронки онлайн-школ и различных бизнесов "
+                  "| Посмотри наш ТГ канал - ", None),
+                 ("https://t.me/alastartarget", "https://t.me/alastartarget")]
+        _runs, _i = [], 0
+        for _t, _l in _segs:
+            _f = {"bold": True, "fontSize": 13,
+                  "foregroundColor": {"red": 0.1, "green": 0.1, "blue": 0.1}}
+            if _l:
+                _f["foregroundColor"] = {"red": 0.05, "green": 0.3, "blue": 0.8}
+                _f["underline"] = True
+                _f["link"] = {"uri": _l}
+            _runs.append({"startIndex": _i, "format": _f})
+            _i += len(_t)
+        _bu(sh, {"requests": [{
+            "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 1, "endRowIndex": 2,
+                                     "startColumnIndex": 0, "endColumnIndex": 1},
+                           "cell": {"userEnteredValue": {"stringValue": "".join(t for t, _ in _segs)},
+                                    "userEnteredFormat": {
+                                        "backgroundColor": {"red": 1, "green": 0.95, "blue": 0.8},
+                                        "horizontalAlignment": "LEFT", "verticalAlignment": "MIDDLE"},
+                                    "textFormatRuns": _runs},
+                           "fields": "userEnteredValue,userEnteredFormat,textFormatRuns"}}]})
+        _bu(sh, {"requests": [{
+            "updateDimensionProperties": {
+                "range": {"sheetId": ws.id, "dimension": "ROWS", "startIndex": 1, "endIndex": 2},
+                "properties": {"pixelSize": 32}, "fields": "pixelSize"}}]})
         r, g, b = int(color[0:2], 16) / 255, int(color[2:4], 16) / 255, int(color[4:6], 16) / 255
         bu(sh, {"requests": [{
             "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 0, "endRowIndex": 1,
@@ -200,31 +232,7 @@ def main():
     paint(ensure_ws(sh, "🚀 Open Code GO", len(gor)), goh,
           [gorow(i + 1, e) for i, e in enumerate(gor)], "6A1B9A")
 
-    # Статусы
-    provs = ks.get("providers", {})
-    shdr = ["Провайдер", "Режим", "Ключ", "Auth", "Моделей", "Ошибка", "Последний OK", "Stale"]
-    srows = []
-    for name, p in provs.items():
-        err = p.get("error", "") or ""
-        if "401" in err or "403" in err:
-            err = "ключ не принят; " + err
-        elif "402" in err:
-            err = "требуется баланс; " + err
-        srows.append([prov_name(name), p.get("mode", ""), "да" if p.get("has_key") else "нет",
-                      "ok" if p.get("auth_ok") else "—", p.get("models", ""),
-                      err, p.get("last_ok", "") or "", "да" if p.get("stale") else ""])
-    paint(ensure_ws(sh, "📡 Статусы", len(srows)), shdr, srows, "546E7A")
-
-    # Мета
-    m = cat.get("meta", {})
-    fx = (m.get("fx") if isinstance(m.get("fx"), dict) else {}) or {}
-    meta_rows = [["generated_at", cat.get("generated_at", "")],
-                 ["checked_at (ключи)", ks.get("checked_at", "")],
-                 ["USD/RUB", fx.get("usd_rub", "")],
-                 ["FREE", len(secs.get("free", []))],
-                 ["PAID", len(secs.get("paid", []))],
-                 ["GO", len(secs.get("go", []))]]
-    paint(ensure_ws(sh, "🧾 Мета", 10), ["Параметр", "Значение"], meta_rows, "455A64")
+    # Статусы/Мета не заливаем (решение владельца)
 
     # order: model sheets first
     want = ["⚡ Модели FREE", "💰 Модели PAID", "🚀 Open Code GO", "📡 Статусы", "🧾 Мета",
