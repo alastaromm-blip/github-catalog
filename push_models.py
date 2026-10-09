@@ -160,10 +160,12 @@ def main():
         ws.clear()
         time.sleep(1)
         ws.append_row(header)
-        ws.append_row([""])  # promo row, look applied below
-        for i in range(0, len(data), 100):
-            ws.append_rows([[("" if v is None else v) for v in r] for r in data[i:i + 100]])
-            time.sleep(1)
+        # data strictly from row 3 (empty placeholder rows are ignored by the API)
+        strrows = [[("" if v is None else v) for v in r] for r in data]
+        end = 2 + len(strrows)
+        lastcol = chr(64 + len(header))
+        ws.update(values=strrows, range_name=f"A3:{lastcol}{end}")
+        time.sleep(1)
         n = len(data) + 2
         # promo look (same as Топ недели): single line, left, links, height 32
         _segs = [('Рекламное агентство "Гибкий Маркетинг" ', None),
@@ -196,6 +198,11 @@ def main():
                 "range": {"sheetId": ws.id, "dimension": "ROWS", "startIndex": 1, "endIndex": 2},
                 "properties": {"pixelSize": 32}, "fields": "pixelSize"}}]})
         r, g, b = int(color[0:2], 16) / 255, int(color[2:4], 16) / 255, int(color[4:6], 16) / 255
+        bu(sh, {"requests": [{
+            "updateSheetProperties": {
+                "properties": {"sheetId": ws.id,
+                               "tabColor": {"red": r, "green": g, "blue": b}},
+                "fields": "tabColor"}}]})
         bu(sh, {"requests": [{
             "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 0, "endRowIndex": 1,
                                      "startColumnIndex": 0, "endColumnIndex": len(header)},
