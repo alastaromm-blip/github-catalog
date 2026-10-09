@@ -126,9 +126,10 @@ def paint_sheet(sh, ws, header, promo, data_rows, widths, star_col=2, date_col=8
         ws.append_rows([[str(v) for v in r[:len(header)]] for r in data_rows[i:i + 100]])
         print(f"  {ws.title}: {min(i+100, n)}/{n}", flush=True)
     total = n + 2
+    _hr, _hg, _hb = _hub_color(ws.title)
     _retry(lambda: ws.format(f"A1:{chr(64+len(header))}1",
               {"textFormat": {"bold": True, "foregroundColor": {"red": 1, "green": 1, "blue": 1}},
-               "backgroundColor": {"red": 0.16, "green": 0.32, "blue": 0.65},
+               "backgroundColor": {"red": _hr, "green": _hg, "blue": _hb},
                "horizontalAlignment": "CENTER", "verticalAlignment": "MIDDLE"}), "fmt-head")
     _retry(lambda: ws.format(f"A2:{chr(64+len(header))}2",
               {"backgroundColor": {"red": 1, "green": 0.95, "blue": 0.8},
@@ -145,6 +146,17 @@ def paint_sheet(sh, ws, header, promo, data_rows, widths, star_col=2, date_col=8
             "properties": {"pixelSize": w}, "fields": "pixelSize"}} for i, w in widths.items()]})
     scol = chr(65 + star_col)
     _retry(lambda: ws.format(f"{scol}3:{scol}{total}", {"wrapStrategy": "CLIP"}), "fmt-clip")
+    bu(sh, {"requests": [{
+        "repeatCell": {"range": {"sheetId": ws.id, "startRowIndex": 2,
+                                 "endRowIndex": total,
+                                 "startColumnIndex": 3, "endColumnIndex": 5},
+                       "cell": {"userEnteredFormat": {"wrapStrategy": "WRAP",
+                                                      "verticalAlignment": "TOP"}},
+                       "fields": "userEnteredFormat.wrapStrategy,userEnteredFormat.verticalAlignment"}}]})
+    bu(sh, {"requests": [{"updateSheetProperties": {
+        "properties": {"sheetId": ws.id,
+                       "tabColor": {"red": _hr, "green": _hg, "blue": _hb}},
+        "fields": "tabColor"}}]})
     dcol = chr(65 + date_col)
     bu(sh, {"requests": [{
         "addConditionalFormatRule": {"rule": {
