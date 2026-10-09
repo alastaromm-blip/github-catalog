@@ -49,6 +49,11 @@ def is_fresh(pushed_at: str, max_days: int, now_iso: str) -> bool:
 
 def hub_for_topics(topics: list[str]) -> str:
     t = {x.lower() for x in topics}
+    _chan = {"seo", "geo", "social-media", "social-media-marketing", "email-marketing",
+             "paid-advertising", "influencer-marketing", "content-optimization",
+             "marketing-automation", "organic-social", "newsletter", "broadcast"}
+    if "marketing" in t and len(t & _chan) >= 3:
+        return "marketing"
     if t & {"image-generation", "stable-diffusion", "text2image", "text-to-image", "comfy", "midjourney", "image-editing"}:
         return "images"
     if t & {"database", "postgres", "firebase", "backend", "search-engine", "vector-database", "embeddings"}:
@@ -77,4 +82,6 @@ def hub_for_topics(topics: list[str]) -> str:
         return "crm"
     if t & {"video-editing", "video-automation", "ffmpeg", "text-to-speech", "speech-to-text", "subtitles"}:
         return "video"
+    if "analytics" in t:
+        return "cloud"
     return "other"
