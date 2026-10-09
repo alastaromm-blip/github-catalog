@@ -17,7 +17,8 @@
   "ai": "Нейросетевые помощники",
   "other": "Разобрать",
   "images": "Генерация картинок",
-  "data": "Базы и бэкенд"
+  "data": "Базы и бэкенд",
+  "marketing": "Маркетинг"
  },
  "hubs": [
   {
@@ -146,6 +147,14 @@
     "firebase",
     "backend",
     "search-engine"
+   ]
+  },
+  {
+   "id": "marketing",
+   "topics": [
+    "marketing",
+    "marketing-automation",
+    "influencer-marketing"
    ]
   }
  ],
